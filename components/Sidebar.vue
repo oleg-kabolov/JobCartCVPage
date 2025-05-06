@@ -13,22 +13,7 @@
       
       <!-- Menu -->
       <div class="flex-1 overflow-y-auto py-4">
-        <div v-if="!isCollapsed" class="px-3 py-2 text-sm font-medium">
-          Menu
-        </div>
-        
-        <ul class="space-y-1 px-2">
-          <li v-for="(item, index) in navLinks" :key="index">
-            <NuxtLink 
-              :to="item.to" 
-              class="flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800"
-              :class="{'justify-center': isCollapsed}"
-            >
-              <UIcon v-if="item.icon" :name="item.icon" class="flex-shrink-0 mr-2" :class="{'mr-0': isCollapsed}" />
-              <span v-if="!isCollapsed">{{ item.label }}</span>
-            </NuxtLink>
-          </li>
-        </ul>
+        <UNavigationMenu :items="navLinks" orientation="vertical" :collapsed="isCollapsed" />
       </div>
       
       <!-- Bottom Controls -->
@@ -82,7 +67,7 @@ const navLinks = computed(() => {
   return menu.value.map(item => {
     return {
       label: item.post_title,
-      icon: 'i-heroicons-document-text',
+      icon: item.icon,
       to: `${item.url}`
     }
   });

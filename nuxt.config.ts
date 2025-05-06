@@ -11,8 +11,23 @@ export default defineNuxtConfig({
     '@nuxt/ui'
   ],
   ui: {
-    icons: ['heroicons'],
     fonts: false
   },
-  css: ['~/assets/css/main.css']
+  css: ['~/assets/css/main.css'],
+  
+  // Используем в Nuxt 3 для загрузки .env файлов
+  nitro: {
+    preset: 'node'
+  },
+  
+  runtimeConfig: {
+    // Секретные переменные, доступные только на сервере
+    // Можно получить доступ через useRuntimeConfig() в composables
+    
+    // Публичные переменные, доступные и на клиенте и на сервере
+    public: {
+      wordpressApiUrl: process.env.WORDPRESS_API_URL,
+      apiBase: process.env.NUXT_PUBLIC_API_BASE
+    }
+  }
 })

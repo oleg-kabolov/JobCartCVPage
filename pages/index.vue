@@ -4,7 +4,13 @@
       <template #header>
         <div class="flex items-center justify-between">
           <h2 class="text-xl font-bold">Привет, Nuxt UI!</h2>
-          <UButton icon="i-heroicons-sun" variant="ghost" color="gray" aria-label="Сменить тему" />
+          <UButton 
+            :icon="colorMode.value === 'light' ? 'i-heroicons-moon' : 'i-heroicons-sun'" 
+            variant="ghost" 
+            color="gray" 
+            aria-label="Сменить тему" 
+            @click="toggleColorMode"
+          />
         </div>
       </template>
       <p>Это демонстрация работы стилей Nuxt UI и Tailwind CSS.</p>
@@ -30,4 +36,12 @@
       </UCard>
     </div>
   </div>
-</template> 
+</template>
+
+<script setup>
+const colorMode = useColorMode()
+
+function toggleColorMode() {
+  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+}
+</script> 

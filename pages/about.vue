@@ -28,8 +28,6 @@
           <li><strong>Nuxt Fonts</strong> - Web font optimization</li>
         </ul>
         
-        <UDivider class="my-8" />
-        
         <UAlert title="Get Started" description="Ready to build your own Nuxt UI application?" color="primary" class="mt-8">
           <template #description>
             <p class="mb-4">Check out the official documentation to learn more.</p>

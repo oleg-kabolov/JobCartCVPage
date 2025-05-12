@@ -6,6 +6,8 @@
 
 Инфтерфейс на [Nuxit UI](https://ui.nuxt.com/components/app)
 
+В проекте доступны все классы [Tailwind](https://tailwindcss.com/docs/installation/using-vite)
+
 ## Setup на
 
 Make sure to install dependencies:

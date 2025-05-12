@@ -1,15 +1,18 @@
 <template>
-  <div class="h-screen overflow-hidden flex">
+  <UContainer class="p-0 sm:p-0 lg:p-0 h-screen flex">
     <!-- Sidebar -->
     <Sidebar ref="sidebarRef" />
     
     <!-- Main Content -->
-    <main 
+    <!-- <main 
       class="transition-all duration-300 overflow-auto p-5 h-screen w-full" 
-    >
+    > -->
+    
+    <UContainer>
       <slot />
-    </main>
-  </div>
+    </UContainer>
+    <!-- </main> -->
+  </UContainer>
 </template>
 
 <script setup lang="ts">

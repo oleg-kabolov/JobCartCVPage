@@ -1,32 +1,47 @@
 <template>
   <aside 
     :class="[
-      'sidebar border-r transition-all duration-300',
-      isCollapsed ? 'w-[70px]' : 'w-[250px]'
+      'sidebar border-r ring-default transition-all duration-300',
+      isCollapsed ? 'w-[70px] min-w-[70px]' : 'w-[250px] min-w-[250px]'
     ]"
   >
-    <div class="flex flex-col h-full">
+    <div class="flex flex-col h-full grow">
       <!-- Logo -->
-      <div class="p-4 text-center">
-        <img src="/logo.svg" alt="Logo" class="mx-auto" :class="isCollapsed ? 'max-h-10' : 'max-h-14'" />
+      <div class="text-center"
+      :class="isCollapsed ? 'px-3 py-3' : 'px-4 py-6'" >
+        <NuxtImg src="/logo.svg" alt="Logo" class="mx-auto" :class="isCollapsed ? 'max-h-10' : 'max-h-14'" />
       </div>
       
       <!-- Menu -->
-      <div class="flex-1 overflow-y-auto py-4">
-        <UNavigationMenu :items="navLinks" orientation="vertical" :collapsed="isCollapsed" />
+      <div class="flex-1 overflow-y-auto ">
+        <UNavigationMenu 
+          orientation="vertical" 
+          class="px-2"
+          :items="navLinks" 
+          :collapsed="isCollapsed"           
+          :ui="{
+            linkLeadingIcon: 'text-lg'
+          }"
+        />
       </div>
       
       <!-- Bottom Controls -->
-      <div class="border-t p-4">
+      <div class="border-t ring-default py-2">
         <!-- Toggle Theme Button -->
-        <div class="mb-4 flex justify-center">
+        <div class="mb-2 flex justify-center">
           <UButton 
-            :icon="colorMode.value === 'light' ? 'i-heroicons-moon' : 'i-heroicons-sun'" 
+            :icon="$colorMode.value === 'light' ? 'i-heroicons-moon' : 'i-heroicons-sun'" 
             variant="ghost" 
             color="gray" 
             aria-label="Toggle theme" 
             @click="toggleColorMode"
           />
+          <!-- <select class="ring-default text-sm" v-model="$colorMode.preference">
+            <option value="system">System</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="sepia">Sepia</option>
+          </select> -->
         </div>
         
         <!-- Toggle Sidebar Button -->
@@ -52,7 +67,7 @@ const wpApiUrl = config.public.wordpressApiUrl;
 const isCollapsed = ref(false);
 const menu = ref<any[]>([]);
 const error = ref<string | null>(null);
-const colorMode = useColorMode();
+const $colorMode = useColorMode();
 
 // Navigation links computed from WP menu items
 const navLinks = computed(() => {
@@ -65,6 +80,7 @@ const navLinks = computed(() => {
   }
   
   return menu.value.map(item => {
+    console.log(isCollapsed.value);
     return {
       label: item.post_title,
       icon: item.icon,
@@ -81,7 +97,7 @@ const toggleSidebar = () => {
 
 // Function to toggle theme
 function toggleColorMode() {
-  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
+  $colorMode.preference = $colorMode.value === 'dark' ? 'light' : 'dark';
 }
 
 // Fetch menu items from WordPress

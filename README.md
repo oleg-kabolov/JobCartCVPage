@@ -1,4 +1,4 @@
-# Nuxt Minimal Starter
+# Jobcart App Nuxt
 
 Проект на [Nuxt](https://nuxt.com/docs/getting-started/introduction).
 Сервер будет запущен на  `http://localhost:3000`:

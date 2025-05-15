@@ -11,12 +11,6 @@
 (https://www.dropbox.com/scl/fi/2oqbdam6ax5glah71gs2y/Screenshot_18.png?rlkey=bttjtkvo2tn1u237ibyvx1vfl&st=8pyuq7na&dl=0)
 
 Страница (domain/cv)
-## Setup на
 
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
 ```
 

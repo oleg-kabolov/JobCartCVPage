@@ -7,8 +7,8 @@
 В проекте доступны все классы [Tailwind](https://tailwindcss.com/docs/installation/using-vite)
 
 Демо:
-(https://drive.google.com/file/d/1nu7sM3e_eABkpNI0wD_1dYBYjZPXKJDT/view?usp=drive_link)
-(https://drive.google.com/file/d/13fuZia_ohdg3TSyrLBxS9TKQrndGZ-kw/view?usp=sharing)
+(https://www.dropbox.com/scl/fi/0l1z97rz2z37yqzgwtmm4/Screenshot_17.png?rlkey=98uo50lsnj0df07xdg0aflg7h&st=ieh7kq8e&dl=0)
+(https://www.dropbox.com/scl/fi/2oqbdam6ax5glah71gs2y/Screenshot_18.png?rlkey=bttjtkvo2tn1u237ibyvx1vfl&st=8pyuq7na&dl=0)
 
 ## Setup на
 

@@ -13,16 +13,18 @@
         </UButton>
       </template>
     </UCard>
-    
+
     <!-- Тестовый компонент для проверки переменных окружения -->
     <EnvTest class="mb-6" />
-    
+
     <div class="flex items-center my-6">
       <div class="h-px bg-gray-200 dark:bg-gray-700 flex-grow"></div>
-      <span class="px-3 text-sm text-gray-500 dark:text-gray-400">Demo Content</span>
+      <span class="px-3 text-sm text-gray-500 dark:text-gray-400"
+        >Demo Content</span
+      >
       <div class="h-px bg-gray-200 dark:bg-gray-700 flex-grow"></div>
     </div>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
       <UCard>
         <template #header>
@@ -35,7 +37,7 @@
           <li>Dark/Light mode toggle</li>
         </ul>
       </UCard>
-      
+
       <UCard>
         <template #header>
           <h3 class="text-lg font-semibold">Nuxt UI Components</h3>
@@ -53,6 +55,6 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'default'
+  layout: "default",
 });
-</script> 
+</script>

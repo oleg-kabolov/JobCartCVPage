@@ -1,6 +1,6 @@
 <template>
-  <UContainer class="page-content p-0 sm:p-0 lg:p-0 h-screen flex bg-[#1A202C]">
-    <UCard class="w-full h-full bg-[#1A202C]">
+  <UContainer class="page-content p-0 sm:p-0 lg:p-0 h-screen flex bg-[#18181b]">
+    <UCard class="w-full h-full bg-[#18181b]">
       <template #header>
         <div class="btn-wrapper mt-[25px]">
           <ul class="button-list flex gap-2 items-center">
@@ -200,9 +200,7 @@
               Статус рассмотрения:
             </h2>
 
-            <div
-              class="status-container flex flex-wrap gap-2 mb-4 max-w-[900px]"
-            >
+            <div class="flex flex-wrap gap-2 mb-4 max-w-[900px] text-center">
               <div
                 v-for="(status, index) in statusList"
                 :key="index"
@@ -293,6 +291,8 @@ const statusMap = new Map<string, string>([
   ["archived", "Архивировано"],
 ]);
 
+//
+
 const candidateClaimStatus = computed((): string => {
   return statusMap.get(resumeRef.value.status) || "Статус не определен";
 });
@@ -338,52 +338,52 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-:deep(.button-item-btn span) {
+.button-item-btn :deep(span) {
   width: 48px;
   height: 25px;
 }
-:deep(.button-item-btn) {
+.button-item-btn {
   border: 1px solid transparent;
   transition: 0.2s ease-out;
   padding-right: 0px;
   padding-left: 0px;
 }
-:deep(.button-item-btn:hover) {
+.button-item-btn:hover {
   border: 1px solid #fff;
   background-color: transparent;
 }
-:deep(.button-item-btn:hover span) {
+.button-item-btn:hover :deep(span) {
   color: #fff;
 }
 
-:deep(.user-cv-alert) {
+.user-cv-alert {
   display: flex;
   align-items: center;
 }
-:deep(.user-cv-alert span) {
+.user-cv-alert :deep(span) {
   margin-right: 15px;
   font-size: 32px;
   color: #fff;
 }
-:deep(.user-cv-alert span) {
+.user-cv-alert :deep(span) {
   margin-right: 15px;
   font-size: 32px;
   color: #fff;
 }
-:deep(.user-event-item-btn) {
+.user-event-item-btn {
   padding-right: 5px;
   padding-left: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
   transition: 0.2s ease;
 }
-:deep(.user-event-item-btn:hover) {
+.user-event-item-btn:hover {
   background-color: #086b10;
 }
-:deep(.user-event-item-btn:hover span) {
+.user-event-item-btn:hover :deep(span) {
   color: #fff;
 }
-:deep(.user-event-item-btn span) {
+.user-event-item-btn :deep(span) {
   display: flex;
   width: 115px;
   font-size: 14px;
@@ -417,10 +417,6 @@ onMounted(async () => {
 
   text-align: center;
   transition: all 0.3s ease;
-}
-
-.status-container div {
-  text-align: center;
 }
 
 .status-active span {

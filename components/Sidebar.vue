@@ -97,21 +97,6 @@ const navLinks = computed(() => {
     ];
   }
 
-  // Push the "Резюме" link to the menu
-
-  const hasResumeItem = menu.value.some(
-    (item) => item.post_title === "Резюме ТЕСТ"
-  );
-
-  // Check if the "Резюме" link is already in the menu
-  if (!hasResumeItem) {
-    menu.value.push({
-      post_title: "Резюме ТЕСТ",
-      icon: "material-symbols:receipt-outline",
-      url: "/cv",
-    });
-  }
-
   if (menu.value.length === 0) {
     return [{ label: "Loading...", icon: "i-heroicons-arrow-path", to: "#" }];
   }
@@ -143,6 +128,8 @@ onMounted(async () => {
     const response = await fetch(
       `https://dev.jobcart.ru/wp-json/wp/v2/menus/87`
     );
+    // https://dev.jobcart.ru/wp-json/wp/v2/menus/87
+    // ${wpApiUrl}/menus/87
     if (!response.ok) {
       throw new Error("Failed to fetch menu data");
     }

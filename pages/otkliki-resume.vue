@@ -172,8 +172,6 @@ const store = useCandidateStore();
 
 const isLoaded = ref(false);
 
-const statusListItems = ref([]);
-
 onMounted(async () => {
   await store.fetchCandidate();
   console.log(store.resumeRef);

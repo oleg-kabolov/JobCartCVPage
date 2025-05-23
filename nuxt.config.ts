@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/scripts",
     "@nuxt/ui",
+    "@pinia/nuxt",
   ],
   ui: {
     fonts: false,

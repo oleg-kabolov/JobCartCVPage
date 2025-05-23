@@ -5,65 +5,10 @@
         <div class="btn-wrapper mt-[25px]">
           <ul class="button-list flex gap-2 items-center">
             <li class="button-item">
-              <UButton
+              <UTabs
+                :items="BtnHeaderMap"
                 class="button-item-btn cursor-pointer"
-                icon="material-symbols:print-sharp"
                 size="xl"
-                variant="solid"
-                color="neutral"
-              />
-            </li>
-            <li class="button-item">
-              <UButton
-                class="button-item-btn cursor-pointer"
-                label="PDF"
-                size="xl"
-                variant="solid"
-                color="neutral"
-              />
-            </li>
-            <li class="button-item">
-              <UButton
-                class="button-item-btn cursor-pointer"
-                label="DOC"
-                size="xl"
-                variant="solid"
-                color="neutral"
-              />
-            </li>
-            <li class="button-item">
-              <UButton
-                class="button-item-btn cursor-pointer"
-                icon="clarity:contract-line"
-                size="xl"
-                variant="solid"
-                color="neutral"
-              />
-            </li>
-            <li class="button-item">
-              <UButton
-                class="button-item-btn cursor-pointer"
-                icon="mdi:trash"
-                size="xl"
-                variant="solid"
-                color="neutral"
-              />
-            </li>
-            <li class="button-item">
-              <UButton
-                class="button-item-btn cursor-pointer"
-                icon="mdi:receipt-text-send"
-                size="xl"
-                variant="solid"
-                color="neutral"
-              />
-            </li>
-            <li class="button-item">
-              <UButton
-                class="button-item-btn cursor-pointer"
-                icon="mdi:favourite"
-                size="xl"
-                variant="solid"
                 color="neutral"
               />
             </li>
@@ -76,7 +21,7 @@
         >
           <UAvatar
             class="w-[195px] h-[195px]"
-            :src="candidateClaimAvatar"
+            :src="store.candidateClaimAvatar"
             size="xl"
           />
         </div>
@@ -84,7 +29,7 @@
           <h2
             class="user-name text-lg mb-3 font-semibold text-xl flex items-center"
           >
-            {{ candidateName }}
+            {{ store.candidateName }}
             <UIcon
               name="mdi:file-send-outline"
               class="size-5 social-icon mr-1 text-[#000] ml-1 text-[18px]"
@@ -103,16 +48,16 @@
             >
           </div>
           <p class="user-claim-status text-md">{{ candidateClaimStatus }}</p>
-          <p class="user-age">{{ candidateAge }}</p>
+          <p class="user-age">{{ store.candidateAge }}</p>
           <div class="user-phone-number-wrapper flex items-center">
             <div class="user-phone-number flex items-center mr-4">
               <UIcon
                 name="fa-solid:phone-alt"
                 class="size-5 social-icon mr-1 text-[#FFB126]"
               /><a
-                :href="`tel:${candidatePhoneNumber}`"
+                :href="`tel:${store.candidatePhoneNumber}`"
                 class="phone-link text-md"
-                >{{ candidatePhoneNumber }}</a
+                >{{ store.candidatePhoneNumber }}</a
               >
             </div>
             <div class="user-socials flex items-center">
@@ -146,8 +91,8 @@
             <UIcon
               name="material-symbols:mail"
               class="size-5 social-icon mr-1 text-[#FFB126]"
-            /><a :href="`mailto:${candidateEmail}`" class="text-md">{{
-              candidateEmail
+            /><a :href="`mailto:${store.candidateEmail}`" class="text-md">{{
+              store.candidateEmail
             }}</a>
           </p>
         </div>
@@ -159,36 +104,11 @@
             <ul class="user-event-list flex flex-row gap-2">
               <li class="user-event-item">
                 <UButton
-                  class="user-event-item-btn cursor-pointer"
+                  v-for="(label, index) in userEventBtn"
+                  :key="index"
+                  class="user-event-item-btn cursor-pointer mr-2"
                   size="xl"
-                  label="Собеседование Запланировано"
-                  variant="outline"
-                  color="success"
-                />
-              </li>
-              <li class="user-event-item">
-                <UButton
-                  class="user-event-item-btn cursor-pointer"
-                  size="xl"
-                  label="Создать видеозвонок"
-                  variant="outline"
-                  color="success"
-                />
-              </li>
-              <li class="user-event-item">
-                <UButton
-                  class="user-event-item-btn cursor-pointer"
-                  size="xl"
-                  label="Запланировать событие"
-                  variant="outline"
-                  color="success"
-                />
-              </li>
-              <li class="user-event-item">
-                <UButton
-                  class="user-event-item-btn cursor-pointer"
-                  size="xl"
-                  label="Отправить запрос"
+                  :label="label.label"
                   variant="outline"
                   color="success"
                 />
@@ -201,18 +121,16 @@
             </h2>
 
             <div class="flex flex-wrap gap-2 mb-4 max-w-[900px] text-center">
-              <div
-                v-for="(status, index) in statusList"
-                :key="index"
-                class="user-claim-status-item"
-                :class="{
-                  'status-active': status === currentStatus,
-                  'status-completed':
-                    statusOrder(status) < statusOrder(currentStatus),
-                }"
+              <UStepper
+                :default-value="2"
+                color="neutral"
+                :items="statusListFlags"
+                class="stepper"
               >
-                <span class="status-text">{{ statusMap.get(status) }}</span>
-              </div>
+                <template #indicator="{ item }">
+                  <div>{{ item.title }}</div>
+                </template>
+              </UStepper>
             </div>
           </div>
           <div class="user-claim-source mb-5">
@@ -247,33 +165,58 @@
 </template>
 
 <script setup lang="ts">
-const resumeRef = ref<any[]>([]);
+import { Icon } from "#components";
+import { useCandidateStore } from "../stores/candidateCv";
 
-const candidateName = computed((): string => {
-  return resumeRef.value.name;
-});
-const candidateEmail = computed((): string => {
-  return resumeRef.value.email;
-});
-const candidatePhoneNumber = computed((): string => {
-  return resumeRef.value.phone;
-});
-const candidateAge = computed((): string => {
-  return !resumeRef.value.age
-    ? "Возраст не указан"
-    : "Возраст: " + resumeRef.value.age;
-});
-const candidateCvFile = computed((): string => {
-  return !resumeRef.value.portfolios
-    ? "отсутствуют"
-    : resumeRef.value.portfolios;
+const store = useCandidateStore();
+
+const isLoaded = ref(false);
+
+onMounted(async () => {
+  await store.fetchCandidate();
+  console.log(store.resumeRef);
+  isLoaded.value = true;
 });
 
-const candidateClaimAvatar = computed((): string => {
-  return !resumeRef.value?.photo
-    ? "https://i.pinimg.com/474x/8b/ff/4a/8bff4a7645a1a2f322e0add49180cef8.jpg "
-    : `https://dev.jobcart.ru/${resumeRef.value.photo}`;
-});
+const resumeRef = computed(() => store.resumeRef);
+
+const BtnHeaderMap = [
+  {
+    key: "print",
+    label: "",
+    icon: "material-symbols:print-sharp",
+  },
+  {
+    key: "pdf",
+    label: "PDF",
+    icon: "",
+  },
+  {
+    key: "doc",
+    label: "DOC",
+    icon: "",
+  },
+  {
+    key: "contract",
+    label: "",
+    icon: "clarity:contract-line",
+  },
+  {
+    key: "trash",
+    label: "",
+    icon: "mdi:trash",
+  },
+  {
+    key: "receipt",
+    label: "",
+    icon: "mdi:receipt-text-send",
+  },
+  {
+    key: "favourite",
+    label: "",
+    icon: "mdi:favourite",
+  },
+];
 
 // Candidate CV claim status data structure based on suggested statuses in Json
 
@@ -291,21 +234,38 @@ const statusMap = new Map<string, string>([
   ["archived", "Архивировано"],
 ]);
 
-//
+const userEventBtn = [
+  {
+    key: "interview",
+    label: "Собеседование запланировано",
+  },
+  {
+    key: "video_call",
+    label: "Создать видеозвонок",
+  },
+  {
+    key: "schedule_event",
+    label: "Запланировать событие",
+  },
+  {
+    key: "send_request",
+    label: "Отправить запрос",
+  },
+];
 
 const candidateClaimStatus = computed((): string => {
-  return statusMap.get(resumeRef.value.status) || "Статус не определен";
+  return statusMap.get(resumeRef.value?.status) || "Статус не определен";
 });
 
 const candidateBirthDate = computed((): string => {
-  return !resumeRef.value.birth_date
+  return !resumeRef.value?.birth_date
     ? "не указана"
-    : resumeRef.value.birth_date;
+    : resumeRef.value?.birth_date;
 });
 
 // Candidate CV claim date
 const candidateClaimDate = computed((): string => {
-  const date = new Date(resumeRef.value.date);
+  const date = new Date(resumeRef.value?.date);
   const day = String(date.getDate()).padStart(2, "0");
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
@@ -316,44 +276,44 @@ const candidateClaimDate = computed((): string => {
 // Candidate CV claim status
 const statusList = Array.from(statusMap.keys());
 
-const currentStatus = computed(() => resumeRef.value.status);
+const statusListFlags = computed(() => {
+  const statuses = Array.from(statusMap.keys());
+  const statusItems = [];
+  for (const status of statuses) {
+    if (status) {
+      statusItems.push({
+        title: statusMap.get(status),
+      });
+    }
+  }
+  return statusItems;
+});
 
 const statusOrder = (status) => {
   return statusList.indexOf(status);
 };
 
 // Fetch CV items from WP
-onMounted(async () => {
-  try {
-    const response = await fetch(`https://dev.jobcart.ru/wp-json/test/v2/app`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch menu data");
-    }
-    const data = await response.json();
-    resumeRef.value = data || [];
-  } catch (err) {
-    console.error("Error fetching CV:", err);
-  }
+onMounted(() => {
+  store.fetchCandidate();
 });
 </script>
 
 <style scoped>
-.button-item-btn :deep(span) {
+.button-item-btn :deep(button > span) {
   width: 48px;
   height: 25px;
 }
-.button-item-btn {
+.button-item-btn :deep(button) {
   border: 1px solid transparent;
   transition: 0.2s ease-out;
   padding-right: 0px;
   padding-left: 0px;
 }
-.button-item-btn:hover {
+.button-item-btn :deep(button):hover {
+  cursor: pointer;
   border: 1px solid #fff;
   background-color: transparent;
-}
-.button-item-btn:hover :deep(span) {
-  color: #fff;
 }
 
 .user-cv-alert {
@@ -395,22 +355,24 @@ onMounted(async () => {
   text-align: center;
 }
 
-.user-claim-status-item {
-  display: inline-flex;
-  align-items: center;
-  padding-right: 8px;
+.stepper :deep(button) {
+  width: 143px;
+  height: 34px;
+
+  border-radius: 0px;
   justify-content: space-between;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: normal;
+  line-height: 0.9rem;
   color: #333;
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
   transition: background-color 0.3s ease;
   clip-path: polygon(
     0 0,
-    calc(100% - 10px) 0,
+    calc(100% - 12px) 0,
     100% 18px,
-    100% calc(100% - 16px),
-    calc(100% - 9px) 100%,
+    100% calc(100% - 17px),
+    calc(100% - 11px) 100%,
     100% 100%,
     0 100%
   );
@@ -418,28 +380,27 @@ onMounted(async () => {
   text-align: center;
   transition: all 0.3s ease;
 }
-
-.status-active span {
-  background-color: #4b5258;
-  color: white;
+.stepper :deep(div.absolute) {
+  display: none;
 }
 
-.status-completed span {
-  background-color: #6c757d;
-  color: white;
+.stepper :deep(h4) {
+  display: none;
 }
-.status-text {
-  width: 135px;
-  font-weight: normal;
-  height: 100%;
-  padding: 3px 5px;
-  white-space: normal;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  text-align: center;
-  line-height: 14px;
+.stepper {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+}
+.stepper > :deep(div.flex) {
+  display: inline-flex;
+  gap: 2;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.stepper > :deep(div.flex > div) {
+  width: 143px;
+  height: 34px;
+  margin: 4px 2px;
 }
 </style>
